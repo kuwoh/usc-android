@@ -31,11 +31,11 @@ local badgeImages = {
 local laneNames = {"A", "B", "C", "D", "L", "R"}
 local diffNames = {"NOV", "ADV", "EXH", "INF"}
 local backgroundImage = gfx.CreateSkinImage("bg.png", 1);
-game.LoadSkinSample("applause")
+game.LoadSkinSample("applause.wav")
 local played = false
 local shotTimer = 0;
 local shotPath = "";
-game.LoadSkinSample("shutter")
+game.LoadSkinSample("shutter.wav")
 
 local hitWindowPerfect = 46
 local hitWindowGood = 92
