@@ -10,8 +10,8 @@
 #include <tchar.h>
 #endif
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_keycode.h>
+#include <SDL.h>
+#include <SDL_keycode.h>
 
 // C RunTime Header Files
 #include <stdlib.h>

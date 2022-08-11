@@ -46,15 +46,60 @@ set(CMAKE_MACOSX_RPATH 1)
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/Modules/")
 
 # Find external dependencies
-find_package(Freetype REQUIRED)
+set(FREETYPE_FOUND TRUE)
+set(FREETYPE_INCLUDE_DIRS  "${ANDROID_SYSROOT_PATH}/include/freetype2")
+set(FREETYPE_INCLUDE_DIR_ft2build "${ANDROID_SYSROOT_PATH}/include/freetype2")
+set(FREETYPE_INCLUDE_DIR_freetype2 "${ANDROID_SYSROOT_PATH}/include/freetype2/freetype")
+set(FREETYPE_LIBRARIES "${ANDROID_SYSROOT_PATH}/lib/libfreetyped.a")
+set(FREETYPE_VERSION_STRING "2.12.1")
+add_library(freetype SHARED IMPORTED)
+
 find_package(ZLIB REQUIRED)
-find_package(SDL2 REQUIRED)
-find_package(PNG REQUIRED)
-find_package(JPEG REQUIRED)
-find_package(Vorbis REQUIRED)
-find_package(OGG REQUIRED)
-find_package(LibArchive REQUIRED)
-find_package(Iconv REQUIRED)
+# add_library(zlib SHARED IMPORTED)
+
+# set(SDL_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/SDL2/include")
+# set(SDL_FOUND TRUE)
+# set(SDL_VERSION "2.0.22")
+# set(SDL_VERSION_MAJOR 2)
+# set(SDL_VERSION_MINOR 0)
+# set(SDL_VERSION_PATCH 22)
+set(SDL_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/SDL/include")
+set(SDL_SHARED TRUE)
+add_subdirectory(SDL)
+find_library(SDL2 SDL2)
+
+set(PNG_INCLUDE_DIRS "${ANDROID_SYSROOT_PATH}/include")
+set(PNG_LIBRARIES 
+    "${ANDROID_SYSROOT_PATH}/lib/libpng.so"
+    "${ANDROID_SYSROOT_PATH}/lib/libpng16d.so"
+)
+set(PNG_FOUND TRUE)
+set(PNG_VERSION_STRING "1.6.37")
+add_library(png SHARED IMPORTED)
+
+set(JPEG_FOUND TRUE)
+set(JPEG_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/third_party/libjpeg-turbo)
+set(JPEG_LIBRARY ${ANDROID_SYSROOT_PATH}/lib/libjpeg.so)
+set(JPEG_VERSION "2.1.4")
+add_library(jpeg SHARED IMPORTED)
+
+set(OGG_LIBRARIES
+    "${ANDROID_SYSROOT_PATH}/lib/libogg.a")
+add_library(ogg SHARED IMPORTED)
+
+set(Vorbis_LIBRARIES 
+    "${ANDROID_SYSROOT_PATH}/lib/libvorbis.a"
+    "${ANDROID_SYSROOT_PATH}/lib/libvorbisenc.a"
+    "${ANDROID_SYSROOT_PATH}/lib/libvorbisfile.a")
+add_library(vorbis SHARED IMPORTED)
+
+set(LibArchive_FOUND TRUE)
+set(LibArchive_INCLUDE_DIRS "${ANDROID_SYSROOT_PATH}/include")
+set(LibArchive_LIBRARIES "${ANDROID_SYSROOT_PATH}/lib/libarchive.so")
+set(LibArchive_VERSION "3.6.1")
+add_library(libarchive SHARED IMPORTED)
+
+# find_package(Iconv REQUIRED)
 
 # All projects use unicode define
 # this is mainly for windows functions either being defined to call A or W prefixed functions
@@ -67,7 +112,7 @@ if(WIN32)
     target_compile_options(cc-common INTERFACE /Zi)
 endif()
 
-OPTION(EMBEDDED "Enable embedded build" OFF)
+OPTION(EMBEDDED "Enable embedded build" ON)
 
 if(EMBEDDED)
 	message("Enabling embedded build")

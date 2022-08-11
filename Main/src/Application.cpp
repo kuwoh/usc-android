@@ -1722,10 +1722,12 @@ Sample Application::LoadSample(const String &name, const bool &external)
 	else
 		path = Path::Absolute(String("skins/") + m_skin + String("/audio/") + name);
 
+#ifndef ANDROID // I don't know why this is not working on android
 	path = Path::Normalize(path);
 	String ext = Path::GetExtension(path);
 	if (ext.empty())
 		path += ".wav";
+#endif
 
 	Sample ret = g_audio->CreateSample(path);
 	//assert(ret);

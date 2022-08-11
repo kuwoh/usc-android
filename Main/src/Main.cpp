@@ -15,13 +15,17 @@ int32 __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCm
 	return ret;
 }
 #else
-// Linux entry point
-int main(int argc, char** argv)
+
+extern "C"
 {
-	new Application();
-	g_application->SetCommandLine(argc, argv);
-	int32 ret = g_application->Run();
-	delete g_application;
-	return ret;
+	// Linux entry point
+	int main(int argc, char **argv)
+	{
+		new Application();
+		g_application->SetCommandLine(argc, argv);
+		int32 ret = g_application->Run();
+		delete g_application;
+		return ret;
+	}
 }
 #endif

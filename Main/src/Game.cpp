@@ -1321,9 +1321,9 @@ public:
 	// Loads sound effects
 	bool InitSFX()
 	{
-		CheckedLoad(m_slamSample = g_application->LoadSample("laser_slam"));
-		CheckedLoad(m_clickSamples[0] = g_application->LoadSample("click-01"));
-		CheckedLoad(m_clickSamples[1] = g_application->LoadSample("click-02"));
+		CheckedLoad(m_slamSample = g_application->LoadSample("laser_slam.wav"));
+		CheckedLoad(m_clickSamples[0] = g_application->LoadSample("click-01.wav"));
+		CheckedLoad(m_clickSamples[1] = g_application->LoadSample("click-02.wav"));
 
 		m_fxVolume = g_gameConfig.GetFloat(GameConfigKeys::FXVolume);
 		m_slamVolume = g_gameConfig.GetFloat(GameConfigKeys::SlamVolume);

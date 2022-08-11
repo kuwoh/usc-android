@@ -3,7 +3,7 @@ add_subdirectory(lua-5.3.5)
 
 #cpr test programs
 option(CPR_BUILD_TESTS "Set to ON to build cpr tests." OFF)
-set(CPR_ENABLE_SSL ON)
+set(CPR_ENABLE_SSL OFF)
 #TODO: Don't have two curl builds in the game build
 #if(MSVC)
 #    set(CPR_FORCE_USE_SYSTEM_CURL ON) #curl should be available through vcpkg
@@ -19,7 +19,7 @@ target_include_directories(discord-rpc PUBLIC discord-rpc/include)
 #nanovg
 add_library(nanovg nanovg/src/nanovg.c)
 target_include_directories(nanovg PUBLIC nanovg/src)
-target_link_libraries(nanovg ${FREETYPE_LIBRARIES})
+target_link_libraries(nanovg ${FREETYPE_LIBRARIES} "${ANDROID_NDK}/platforms/android-30/arch-arm64/usr/lib/libGLESv2.so")
 target_include_directories(nanovg PRIVATE ${FREETYPE_INCLUDE_DIRS})
 target_compile_definitions(nanovg PRIVATE -DFONS_USE_FREETYPE)
 

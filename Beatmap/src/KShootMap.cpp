@@ -145,7 +145,9 @@ bool ParseKShootCourse(BinaryStream& input, Map<String, String>& settings, Vecto
 			return false;
 		}
 
+#ifndef ANDROID
 		line = Path::Normalize(line);
+#endif
 		charts.push_back(line);
 	}
 	return true;

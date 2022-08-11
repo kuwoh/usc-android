@@ -1,7 +1,7 @@
 #pragma once
 #include "Gamepad.hpp"
 
-#include "SDL2/SDL_joystick.h"
+#include "SDL_joystick.h"
 
 namespace Graphics
 {

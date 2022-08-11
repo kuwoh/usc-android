@@ -46,8 +46,8 @@ source_group("" FILES ${PCH_FILES})
 # Compiler stuff
 enable_precompiled_headers("${MAIN_SRC}" ${PCH_SRC})
 
-include_directories(Audio GUI .)
-add_executable(usc-game ${MAIN_SRC} ${RESOURCE_SRC} ${PCH_FILES})
+include_directories(Audio GUI ${SDL_INCLUDE_DIR} .)
+add_library(usc-game SHARED ${MAIN_SRC} ${RESOURCE_SRC} ${PCH_FILES})
 target_include_directories(usc-game PRIVATE
     ${SRCROOT}
     ${SRCROOT}/GUI
@@ -75,9 +75,6 @@ else(GIT_FOUND)
     target_compile_definitions(usc-game PRIVATE GIT_BRANCH="master")
 endif(GIT_FOUND)
 
-set_output_postfixes(usc-game)
-set_werror(usc-game)
-
 if(MSVC)
 	# Set debugging folder
     set_target_properties(usc-game PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}/bin")
@@ -99,9 +96,12 @@ target_link_libraries(usc-game discord-rpc)
 target_link_libraries(usc-game cpr)
 target_link_libraries(usc-game nlohmann_json)
 
-target_link_libraries(usc-game ${SDL2_LIBRARY})
+target_link_libraries(usc-game ${PROJECT_SOURCE_DIR}/bin/libSDL2_Debug.so)
+target_link_libraries(usc-game "/home/sier/android-sdk/ndk/21.4.7075529/platforms/android-30/arch-arm64/usr/lib/liblog.so")
 target_link_libraries(usc-game ${LibArchive_LIBRARIES})
 target_include_directories(usc-game SYSTEM PRIVATE ${LibArchive_INCLUDE_DIRS})
+
+set_target_properties(usc-game PROPERTIES IMPORTED_LOCATION ${ANDROID_SYSROOT_PATH}/lib/libSDL2.so)
 
 if(WIN32)
     target_link_libraries(usc-game

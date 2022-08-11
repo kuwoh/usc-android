@@ -2,6 +2,15 @@
 #include "Mesh.hpp"
 #include <Graphics/ResourceManagers.hpp>
 
+#ifdef ANDROID
+
+#define GL_GLEXT_PROTOTYPES
+#include "SDL_opengles2.h"
+#include <SDL_opengles2_gl2.h>
+#include <SDL_opengles2_gl2ext.h>
+
+#endif
+
 namespace Graphics
 {
 	uint32 primitiveTypeMap[] =
@@ -30,18 +39,30 @@ namespace Graphics
 			if(m_buffer)
 				glDeleteBuffers(1, &m_buffer);
 			if(m_vao)
+#ifdef ANDROID
+				glDeleteVertexArraysOES(1, &m_vao);
+#else
 				glDeleteVertexArrays(1, &m_vao);
+#endif
 		}
 		bool Init()
 		{
 			glGenBuffers(1, &m_buffer);
+#ifdef ANDROID
+			glGenVertexArraysOES(1, &m_vao);
+#else
 			glGenVertexArrays(1, &m_vao);
+#endif
 			return m_buffer != 0 && m_vao != 0;
 		}
 
 		void SetData(const void* pData, size_t vertexCount, const VertexFormatList& desc) override
 		{
+#ifdef ANDROID
+			glBindVertexArrayOES(m_vao);
+#else
 			glBindVertexArray(m_vao);
+#endif
 			glBindBuffer(GL_ARRAY_BUFFER, m_buffer);
 
 			m_vertexCount = vertexCount;
@@ -81,22 +102,46 @@ namespace Graphics
 			}
 			glBufferData(GL_ARRAY_BUFFER, totalVertexSize * vertexCount, pData, m_bDynamic ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW);
 
+#ifdef ANDROID
+			glBindVertexArrayOES(0);
+#else
 			glBindVertexArray(0);
+#endif
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 		}
 		
 		#ifdef EMBEDDED
 		void Draw() override
 		{
-			glBindVertexArray(m_vao);
+#ifdef ANDROID
+			glBindVertexArrayOES(m_vao);
+#else
+			glBindVertexArray(m_vao);	
+#endif
+			
 			glDrawArrays(m_glType, 0, (int)m_vertexCount);
+			
+#ifdef ANDROID
+			glBindVertexArrayOES(0);
+#else
 			glBindVertexArray(0);
+#endif
 		}
 		void Redraw() override
 		{
+#ifdef ANDROID
+			glBindVertexArrayOES(m_vao);
+#else
 			glBindVertexArray(m_vao);
+#endif
+
 			glDrawArrays(m_glType, 0, (int)m_vertexCount);
+
+#ifdef ANDROID
+			glBindVertexArrayOES(0);
+#else
 			glBindVertexArray(0);
+#endif
 		}
 		#else
 		void Draw() override

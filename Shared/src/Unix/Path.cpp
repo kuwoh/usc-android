@@ -132,6 +132,7 @@ bool Path::FileExists(const String& path)
 }
 String Path::Normalize(const String& path)
 {
+#ifndef ANDROID
 	char out[MAX_PATH];
 	realpath(*path, out);
 	for(uint32 i = 0; i < MAX_PATH; i++)
@@ -142,6 +143,10 @@ String Path::Normalize(const String& path)
 			return out;
 	}
 	return out;
+	return path;
+#else
+	return path;
+#endif
 }
 bool Path::IsAbsolute(const String& path)
 {

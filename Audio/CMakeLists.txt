@@ -35,6 +35,7 @@ target_include_directories(Audio PRIVATE
     ${SRCROOT}
     ${INCROOT}
     ${PCHROOT}
+    ${SDL_INCLUDE_DIR}
 )
 
 #set_werror(Audio)
@@ -49,14 +50,16 @@ target_link_libraries(Audio Shared)
 
 ## 3rd Party dependencies
 ### Find dependencies roots
-target_include_directories(Audio PUBLIC ${SDL2_INCLUDE_DIR})
+target_include_directories(Audio PUBLIC ${SDL2_INCLUDE_DIR} ${ANDROID_SYSROOT_PATH}/include)
 ### Add dependencies to linkage
+target_link_libraries(Audio ${Vorbis_LIBRARIES})
+target_link_libraries(Audio ${OGG_LIBRARIES})
+target_link_libraries(Audio ${ANDROID_NDK}/platforms/android-30/arch-arm64/usr/lib/libOpenSLES.so)
 target_link_libraries(Audio soundtouch)
 target_link_libraries(Audio minimp3)
 target_link_libraries(Audio miniaudio)
-target_link_libraries(Audio ${SDL2_LIBRARY})
-target_link_libraries(Audio ${OGG_LIBRARIES})
-target_link_libraries(Audio ${Vorbis_LIBRARIES})
+target_link_libraries(Audio ${PROJECT_SOURCE_DIR}/bin/libSDL2_Debug.so)
+
 
 target_link_libraries(Audio cc-common)
 

@@ -7270,7 +7270,7 @@ class parser
                     {
                         const auto res = m_lexer.get_number_float();
 
-                        if (JSON_UNLIKELY(not std::isfinite(res)))
+                        if (JSON_UNLIKELY(not isfinite(res)))
                         {
                             return sax->parse_error(m_lexer.get_position(),
                                                     m_lexer.get_token_string(),
@@ -11086,7 +11086,7 @@ boundaries.
 template <typename FloatType>
 boundaries compute_boundaries(FloatType value)
 {
-    assert(std::isfinite(value));
+    assert(isfinite(value));
     assert(value > 0);
 
     // Convert the IEEE representation into a diyfp.
@@ -11788,7 +11788,7 @@ void grisu2(char* buf, int& len, int& decimal_exponent, FloatType value)
     static_assert(diyfp::kPrecision >= std::numeric_limits<FloatType>::digits + 3,
                   "internal error: not enough precision");
 
-    assert(std::isfinite(value));
+    assert(isfinite(value));
     assert(value > 0);
 
     // If the neighbors (and boundaries) of 'value' are always computed for double-precision
@@ -11957,10 +11957,10 @@ template <typename FloatType>
 char* to_chars(char* first, const char* last, FloatType value)
 {
     static_cast<void>(last); // maybe unused - fix warning
-    assert(std::isfinite(value));
+    assert(isfinite(value));
 
     // Use signbit(value) instead of (value < 0) since signbit works for -0.
-    if (std::signbit(value))
+    if (signbit(value))
     {
         value = -value;
         *first++ = '-';
@@ -12676,7 +12676,7 @@ class serializer
     void dump_float(number_float_t x)
     {
         // NaN / inf
-        if (not std::isfinite(x))
+        if (not isfinite(x))
         {
             o->write_characters("null", 4);
             return;

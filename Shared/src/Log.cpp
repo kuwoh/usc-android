@@ -8,6 +8,8 @@
 #include <map>
 #include <mutex>
 
+#include <android/log.h>
+
 class Logger_Impl
 {
 private:
@@ -76,7 +78,7 @@ public:
 #ifdef _WIN32
 		OutputDebugStringW(*Utility::ConvertToWString(msg));
 #endif
-		printf("%s", msg.c_str());
+		__android_log_print(ANDROID_LOG_INFO, "SDVX", "%s", msg.c_str());
 		if(!m_failedToOpen)
 			TextStream::Write(m_writer, msg);
 	}
@@ -181,7 +183,7 @@ void Logger::SetLogLevel(Logger::Severity level)
 }
 void Log(const String& msg, Logger::Severity severity)
 {
-	Logger::Get().Log(msg, severity);
+	__android_log_print(ANDROID_LOG_INFO, "SDVX", "%s", msg.c_str());
 }
 
 #ifdef _WIN32

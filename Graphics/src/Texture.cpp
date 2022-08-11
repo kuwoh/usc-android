@@ -77,7 +77,9 @@ namespace Graphics
 		void SetFromFrameBuffer(Vector2i pos = { 0, 0 }) override
 		{
 			glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
+#ifndef ANDROID
 			glReadBuffer(GL_BACK);
+#endif
 			glBindTexture(GL_TEXTURE_2D, m_texture);
 			glCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, pos.x, pos.y, m_size.x, m_size.y);
 			glBindTexture(GL_TEXTURE_2D, 0);

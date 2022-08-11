@@ -249,7 +249,11 @@ public:
 						score.timestamp = scoreScan.Int64Column(8);
 						auto timestamp = Shared::Time(score.timestamp);
 						score.chartHash = hash;
+#ifdef ANDROID
+						score.replayPath = Path::Absolute("replays/" + hash + "/" + timestamp.ToString() + ".urf");
+#else
 						score.replayPath = Path::Normalize(Path::Absolute("replays/" + hash + "/" + timestamp.ToString() + ".urf"));
+#endif
 						Path::CreateDir(Path::Absolute("replays/" + hash));
 						File replayFile;
 						if (replayFile.OpenWrite(score.replayPath))
@@ -488,7 +492,7 @@ public:
 	}
 	void AddSearchPath(const String& path)
 	{
-		String normalizedPath = Path::Normalize(Path::Absolute(path));
+		String normalizedPath = Path::Absolute(path);
 		if(m_searchPaths.Contains(normalizedPath))
 			return;
 
@@ -496,7 +500,7 @@ public:
 	}
 	void RemoveSearchPath(const String& path)
 	{
-		String normalizedPath = Path::Normalize(Path::Absolute(path));
+		String normalizedPath = Path::Absolute(path);
 		if(!m_searchPaths.Contains(normalizedPath))
 			return;
 

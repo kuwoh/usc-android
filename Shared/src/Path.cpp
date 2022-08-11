@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Path.hpp"
 #include "Files.hpp"
+#include <android/log.h>
 
 /*
 	Common
@@ -12,7 +13,8 @@ String Path::Absolute(const String& path)
 	if(IsAbsolute(path))
 		return path;
 
-	String baseDir = !gameDir.empty() ? gameDir : RemoveLast(GetExecutablePath());
+	String baseDir = "/sdcard/usc";
+
 	return baseDir + sep + path;
 }
 String Path::RemoveLast(const String& path, String* lastOut /*= nullptr*/)

@@ -91,7 +91,9 @@ namespace Graphics
 
 			//Set texture from buffer
 			glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
-			glReadBuffer(GL_BACK);
+#ifndef ANDROID
+			glReadPixels(GL_BACK);
+#endif
 			glBindTexture(GL_TEXTURE_2D, texture);
 			glCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, pos.x, pos.y, m_size.x, m_size.y);
 
@@ -126,7 +128,7 @@ namespace Graphics
 		{
 			///TODO: Use shared/File.hpp instead?
 			File pngfile;
-			pngfile.OpenWrite(Path::Normalize(file));
+			pngfile.OpenWrite(file);
 
 			png_structp png_ptr = NULL;
 			png_infop info_ptr = NULL;
