@@ -38,7 +38,7 @@ add_library(sqlite3
     sqlite3/sqlite3ext.h
 )
 target_include_directories(sqlite3 PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/sqlite3)
-
+target_compile_definitions(sqlite3 PUBLIC SQLITE_THREADSAFE=0)
 #minimp3
 add_library(minimp3
     minimp3/minimp3.c

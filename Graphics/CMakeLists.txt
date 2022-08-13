@@ -31,30 +31,31 @@ target_include_directories(Graphics PRIVATE
 )
 
 # Dependencies
-## Local Dependencies
-
+# # Local Dependencies
 target_link_libraries(Graphics Shared)
 
-## 3rd Party dependencies
-target_include_directories(Graphics PUBLIC ${SDL_INCLUDE_DIR} ${ANDROID_SYSROOT_PATH}/include)
+# # 3rd Party dependencies
+target_include_directories(Graphics PUBLIC ${SDL_INCLUDE_DIR})
 target_include_directories(Graphics PRIVATE SYSTEM ${FREETYPE_INCLUDE_DIRS})
 target_link_libraries(Graphics ${FREETYPE_LIBRARIES})
 target_link_libraries(Graphics SDL2)
 target_link_libraries(Graphics ${JPEG_LIBRARY})
 target_link_libraries(Graphics ${PNG_LIBRARIES})
 target_link_libraries(Graphics GLEW)
-if(UNIX) 
+
+if(UNIX)
     target_link_libraries(Graphics dl)
+
     if(APPLE)
         find_library(OPEN_GL OpenGL)
         target_link_libraries(Graphics ${OPEN_GL})
     else(APPLE)
         target_link_libraries(Graphics ${ANDROID_NDK}/platforms/android-30/arch-arm64/usr/lib/libGLESv2.so)
-#        find_package(X11 REQUIRED)
-#        include_directories(${X11_INCLUDE_DIR})
+
+        # find_package(X11 REQUIRED)
+        # include_directories(${X11_INCLUDE_DIR})
     endif(APPLE)
 endif(UNIX)
-
 
 set_werror(Graphics)
 

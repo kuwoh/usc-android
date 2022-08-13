@@ -6,7 +6,6 @@
         "zlib",
         "curl",
         "freetype",
-        "sdl2",
         "libjpeg-turbo",
         "libvorbis",
         {
@@ -14,12 +13,10 @@
             "default-features": false,
             "features": [
                 "bzip2",
-                "libxml2",
                 "lz4",
                 "lzma",
                 "lzo"
             ]
-        },
-        "libiconv"
+        }
     ]
 }

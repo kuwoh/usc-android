@@ -34,7 +34,7 @@ source_group("" FILES ${PCH_FILES})
 
 # Compiler stuff
 enable_precompiled_headers("${SHARED_SRC}" ${PCH_SRC})
-
+message(${CMAKE_SYSROOT}/usr/include)
 add_library(Shared ${SHARED_SRC} ${PCH_FILES})
 target_compile_features(Shared PUBLIC cxx_std_17)
 target_include_directories(Shared PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
