@@ -101,7 +101,7 @@ target_link_libraries(usc-game ${ANDROID_NDK_PLATFORM}/liblog.so)
 target_link_libraries(usc-game ${LibArchive_LIBRARIES})
 target_include_directories(usc-game SYSTEM PRIVATE ${LibArchive_INCLUDE_DIRS})
 
-set_target_properties(usc-game PROPERTIES IMPORTED_LOCATION ${ANDROID_SYSROOT_PATH}/lib/libSDL2.so)
+#set_target_properties(usc-game PROPERTIES IMPORTED_LOCATION ${ANDROID_SYSROOT_PATH}/lib/x86_64-linux-android/libSDL2.so)
 
 if(WIN32)
     target_link_libraries(usc-game

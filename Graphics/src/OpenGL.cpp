@@ -82,15 +82,20 @@ namespace Graphics
 #endif
 		// Create a context
 		m_impl->context = SDL_GL_CreateContext(sdlWnd);
+		char errmsg[512];
 		if(!m_impl->context)
 		{
-            Logf("Failed to create OpenGL context: %s", Logger::Severity::Error, SDL_GetError());
+			snprintf(errmsg, 512, "Failed to create OpenGL context: %s", SDL_GetError());
+            Log(errmsg, Logger::Severity::Error);
+			throw std::runtime_error(errmsg);
             return false;
 		}
 
 		if (SDL_GL_MakeCurrent(sdlWnd, m_impl->context) < 0)
 		{
-			Logf("Failed to set OpenGL context to current: %s", Logger::Severity::Error, SDL_GetError());
+			snprintf(errmsg, 512, "Failed to set OpenGL context to current: %s", SDL_GetError());
+            Log(errmsg, Logger::Severity::Error);
+			throw std::runtime_error(errmsg);
 			return false;
 		}
 

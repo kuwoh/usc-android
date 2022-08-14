@@ -3,6 +3,7 @@
 #include "Image.hpp"
 #include "Gamepad_Impl.hpp"
 #include <Shared/Profiling.hpp>
+#include <stdexcept>
 
 static void GetDisplayBounds(Vector<Shared::Recti>& bounds)
 {
@@ -68,12 +69,17 @@ namespace Graphics
 #endif
 			String titleUtf8 = Utility::ConvertToUTF8(m_caption);
 
-			SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, sampleCount);
+			SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 0);
 			SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 2);
-			SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8);
+			SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 0);
 
 			m_window = SDL_CreateWindow(*titleUtf8, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
 										m_clntSize.x, m_clntSize.y, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
+
+			if (!m_window) {
+				const char* err = SDL_GetError();
+				throw std::runtime_error(err);
+			}
 			assert(m_window);
 
 			uint32 numJoysticks = SDL_NumJoysticks();

@@ -19,7 +19,7 @@ target_include_directories(discord-rpc PUBLIC discord-rpc/include)
 #nanovg
 add_library(nanovg nanovg/src/nanovg.c)
 target_include_directories(nanovg PUBLIC nanovg/src)
-target_link_libraries(nanovg ${FREETYPE_LIBRARIES} "${ANDROID_NDK}/platforms/android-30/arch-arm64/usr/lib/libGLESv2.so")
+target_link_libraries(nanovg ${FREETYPE_LIBRARIES} "${ANDROID_NDK_PLATFORM}/libGLESv2.so")
 target_include_directories(nanovg PRIVATE ${FREETYPE_INCLUDE_DIRS})
 target_compile_definitions(nanovg PRIVATE -DFONS_USE_FREETYPE)
 

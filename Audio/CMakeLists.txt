@@ -54,7 +54,7 @@ target_include_directories(Audio PUBLIC ${SDL2_INCLUDE_DIR})
 ### Add dependencies to linkage
 target_link_libraries(Audio ${Vorbis_LIBRARIES})
 target_link_libraries(Audio ${OGG_LIBRARIES})
-target_link_libraries(Audio ${ANDROID_NDK}/platforms/android-30/arch-arm64/usr/lib/libOpenSLES.so)
+target_link_libraries(Audio ${ANDROID_NDK_PLATFORM}/libOpenSLES.so)
 target_link_libraries(Audio soundtouch)
 target_link_libraries(Audio minimp3)
 target_link_libraries(Audio miniaudio)

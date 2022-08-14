@@ -50,7 +50,7 @@ if(UNIX)
         find_library(OPEN_GL OpenGL)
         target_link_libraries(Graphics ${OPEN_GL})
     else(APPLE)
-        target_link_libraries(Graphics ${ANDROID_NDK}/platforms/android-30/arch-arm64/usr/lib/libGLESv2.so)
+        target_link_libraries(Graphics ${ANDROID_NDK_PLATFORM}/libGLESv2.so)
 
         # find_package(X11 REQUIRED)
         # include_directories(${X11_INCLUDE_DIR})

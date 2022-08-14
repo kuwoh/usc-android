@@ -15,6 +15,7 @@
 #include "SkinConfig.hpp"
 #include "ShadedMesh.hpp"
 #include "IR.hpp"
+#include <stdexcept>
 
 #ifdef EMBEDDED
 #define NANOVG_GLES2_IMPLEMENTATION
@@ -1046,7 +1047,7 @@ bool Application::m_Init()
 
 	// Init font library
 	if (!Graphics::FontRes::InitLibrary())
-		return false;
+		throw std::runtime_error("Failed to init font library");
 
 	// Create the game window
 	g_resolution = Vector2i(
@@ -1117,14 +1118,15 @@ bool Application::m_Init()
 				{
 					Log("Audio initialization failed", Logger::Severity::Error);
 					delete g_audio;
-					return false;
+					throw std::runtime_error("Audio initialization failed");
+
 				}
 			}
 			else
 			{
 				Log("Audio initialization failed", Logger::Severity::Error);
 				delete g_audio;
-				return false;
+				throw std::runtime_error("Audio initialization failed");
 			}
 		}
 
@@ -1144,7 +1146,7 @@ bool Application::m_Init()
 		if (!g_gl->Init(*g_gameWindow, g_gameConfig.GetInt(GameConfigKeys::AntiAliasing)))
 		{
 			Log("Failed to create OpenGL context", Logger::Severity::Error);
-			return false;
+			throw std::runtime_error("Failed to create OpenGL context");
 		}
 #ifdef EMBEDDED
 #ifdef _DEBUG
