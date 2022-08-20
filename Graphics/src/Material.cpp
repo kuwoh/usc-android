@@ -109,6 +109,8 @@ namespace Graphics
 
 			int32 numUniforms;
 #ifdef EMBEDDED
+			glBindAttribLocation(m_program, 0, "inPos");
+			glBindAttribLocation(m_program, 1, "inTex");
 			glAttachShader(m_program, handle);
 			glLinkProgram(m_program);
 			
