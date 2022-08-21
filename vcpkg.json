@@ -8,6 +8,7 @@
         "freetype",
         "libjpeg-turbo",
         "libvorbis",
+        "sdl2",
         {
             "name": "libarchive",
             "default-features": false,

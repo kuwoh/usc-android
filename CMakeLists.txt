@@ -57,17 +57,7 @@ find_package(JPEG REQUIRED)
 find_package(Vorbis REQUIRED)
 find_package(OGG REQUIRED)
 find_package(LibArchive REQUIRED)
-
-# set(SDL_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/SDL2/include")
-# set(SDL_FOUND TRUE)
-# set(SDL_VERSION "2.0.22")
-# set(SDL_VERSION_MAJOR 2)
-# set(SDL_VERSION_MINOR 0)
-# set(SDL_VERSION_PATCH 22)
-set(SDL_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/SDL/include")
-set(SDL_SHARED TRUE)
-add_subdirectory(SDL)
-find_library(SDL2 SDL2)
+find_package(SDL2 REQUIRED)
 
 # find_package(Iconv REQUIRED)
 
