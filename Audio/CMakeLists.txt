@@ -50,8 +50,8 @@ target_link_libraries(Audio Shared)
 
 ## 3rd Party dependencies
 ### Find dependencies roots
-message("Vorbis_INCLUDE_DIRS: ${Vorbis_INCLUDE_DIRS}") #CI Troubleshooting
-target_include_directories(Audio PUBLIC ${SDL2_INCLUDE_DIR} ${Vorbis_INCLUDE_DIRS})
+message("Vorbis_INCLUDE_DIR: ${Vorbis_INCLUDE_DIR}") #CI Troubleshooting
+target_include_directories(Audio PUBLIC ${SDL2_INCLUDE_DIR} ${Vorbis_INCLUDE_DIR})
 ### Add dependencies to linkage
 target_link_libraries(Audio ${Vorbis_LIBRARIES})
 target_link_libraries(Audio ${OGG_LIBRARIES})
