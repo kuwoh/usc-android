@@ -1,7 +1,7 @@
 #pragma once
 #include <Graphics/Keys.hpp>
 #include <Graphics/Gamepad.hpp>
-#include <SDL.h>
+#include <SDL2/SDL.h>
 #define SIZE_EVENTS 64
 
 namespace Graphics
