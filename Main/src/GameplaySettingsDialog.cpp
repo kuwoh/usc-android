@@ -78,7 +78,7 @@ void GameplaySettingsDialog::InitTabs()
 	{
 
         Vector<FileInfo> files = Files::ScanFiles(
-            Path::Absolute("profiles/"), "cfg", NULL);
+            Path::Absolute(".usc/profiles/"), "cfg", NULL);
 
         for (auto &file : files)
         {
@@ -135,8 +135,8 @@ void GameplaySettingsDialog::InitTabs()
                     || profile[profile.length() - 1] == '.')
                     return;
 
-                if (!Path::IsDirectory(Path::Absolute("profiles")))
-                    Path::CreateDir(Path::Absolute("profiles"));
+                if (!Path::IsDirectory(Path::Absolute(".usc/profiles")))
+                    Path::CreateDir(Path::Absolute(".usc/profiles"));
 
                 // Save old setting
                 g_application->ApplySettings();
@@ -154,9 +154,9 @@ void GameplaySettingsDialog::InitTabs()
             g_application->AddTickable(w);
             }));
 		profileWindowTab->settings.push_back(CreateButton("Manage Profiles", [this_p](const auto&) {
-			if (!Path::IsDirectory(Path::Absolute("profiles")))
-				Path::CreateDir(Path::Absolute("profiles"));
-			Path::ShowInFileBrowser(Path::Absolute("profiles"));
+			if (!Path::IsDirectory(Path::Absolute(".usc/profiles")))
+				Path::CreateDir(Path::Absolute(".usc/profiles"));
+			Path::ShowInFileBrowser(Path::Absolute(".usc/profiles"));
 		}));
     }
 
@@ -223,8 +223,8 @@ GameplaySettingsDialog::Setting GameplaySettingsDialog::m_CreateProfileSetting(c
 
 		if (data.boolSetting.val)
         {
-			if (!Path::IsDirectory(Path::Absolute("profiles")))
-				Path::CreateDir(Path::Absolute("profiles"));
+			if (!Path::IsDirectory(Path::Absolute(".usc/profiles")))
+				Path::CreateDir(Path::Absolute(".usc/profiles"));
 
             // Save current settings
             g_application->ApplySettings();
