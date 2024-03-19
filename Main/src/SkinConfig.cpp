@@ -30,7 +30,7 @@ SkinConfig::SkinConfig(const String& skin)
 	};
 
 	File defFile;
-	String configPath = Path::Normalize(Path::Absolute("skins/" + skin + "/config-definitions.json"));
+	String configPath = Path::Normalize(Path::Absolute(".usc/skins/" + skin + "/config-definitions.json"));
 	//Log(configPath);
 	if(defFile.OpenRead(configPath))
 	{
