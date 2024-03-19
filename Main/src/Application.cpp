@@ -302,7 +302,7 @@ void Application::m_unpackSkins()
 {
 	bool interrupt = false;
 	Vector<FileInfo> files = Files::ScanFiles(
-		Path::Absolute("skins/"), "usc-skin", &interrupt);
+		Path::Absolute(".usc/skins/"), "usc-skin", &interrupt);
 	if (interrupt)
 		return;
 
@@ -390,7 +390,7 @@ void Application::m_unpackSkins()
 		}
 
 		// Use the zip name as the directory if there is no single dir
-		String dest = Path::Absolute("skins/");
+		String dest = Path::Absolute(".usc/skins/");
 		if (!singleDir)
 			dest = fi.fullPath.substr(0, fi.fullPath.length() - 9) + Path::sep;
 
@@ -522,7 +522,7 @@ bool Application::m_LoadConfig(String profileName /* must be by value */)
 
 	bool successful = false;
 
-	String configPath = "Main.cfg";
+	String configPath = ".usc/Main.cfg";
 	File mainConfigFile;
 	if (mainConfigFile.OpenRead(Path::Absolute(configPath)))
 	{
@@ -579,7 +579,7 @@ void Application::m_SaveConfig()
 		return;
 
 	String profile = g_gameConfig.GetString(GameConfigKeys::CurrentProfileName);
-	String configPath = "Main.cfg";
+	String configPath = ".usc/Main.cfg";
 	if (profile == "Main")
 	{
 		//Save everything into main.cfg
@@ -624,7 +624,7 @@ void Application::m_SaveConfig()
 	}
 
 	// Now save the profile only settings
-	configPath = Path::Normalize("profiles/" + profile + ".cfg");
+	configPath = Path::Normalize(".usc/profiles/" + profile + ".cfg");
 
 	GameConfig tmp_gc;
 	{
@@ -1086,7 +1086,7 @@ bool Application::m_Init()
 	m_skin = g_gameConfig.GetString(GameConfigKeys::Skin);
 
 	// Fallback to default if not found
-	if (!Path::FileExists(Path::Absolute("skins/" + m_skin)))
+	if (!Path::FileExists(Path::Absolute(".usc/skins/" + m_skin)))
 	{
 		m_skin = "Default";
 		g_gameConfig.Set(GameConfigKeys::Skin, m_skin);
@@ -1208,10 +1208,11 @@ bool Application::m_Init()
 
 
 	///TODO: check if directory exists already?
-	Path::CreateDir(Path::Absolute("screenshots"));
-	Path::CreateDir(Path::Absolute("songs"));
-	Path::CreateDir(Path::Absolute("replays"));
-	Path::CreateDir(Path::Absolute("crash_dumps"));
+	Path::CreateDir(Path::Absolute(".usc"));
+	Path::CreateDir(Path::Absolute(".usc/screenshots"));
+	Path::CreateDir(Path::Absolute(".usc/songs"));
+	Path::CreateDir(Path::Absolute(".usc/replays"));
+	Path::CreateDir(Path::Absolute(".usc/crash_dumps"));
 	Logger::Get().SetLogLevel(g_gameConfig.GetEnum<Logger::Enum_Severity>(GameConfigKeys::LogLevel));
 	return true;
 }
@@ -2392,7 +2393,7 @@ static int lCreateSkinImage(lua_State *L /*const char* filename, int imageflags 
 {
 	const char *filename = luaL_checkstring(L, 1);
 	int imageflags = luaL_checkinteger(L, 2);
-	String path = "skins/" + g_application->GetCurrentSkin() + "/textures/" + filename;
+	String path = ".usc/skins/" + g_application->GetCurrentSkin() + "/textures/" + filename;
 	path = Path::Absolute(path);
 	int handle = nvgCreateImage(g_guiState.vg, path.c_str(), imageflags);
 	if (handle != 0)
@@ -2436,7 +2437,7 @@ static int lLoadSkinAnimation(lua_State *L)
 static int lLoadSkinFont(lua_State *L /*const char* name */)
 {
 	const char *name = luaL_checkstring(L, 1);
-	String path = "skins/" + g_application->GetCurrentSkin() + "/fonts/" + name;
+	String path = ".usc/skins/" + g_application->GetCurrentSkin() + "/fonts/" + name;
 	path = Path::Absolute(path);
 	return LoadFont(name, path.c_str(), L);
 }
@@ -2671,7 +2672,7 @@ int lLoadSharedSkinTexture(lua_State* L) {
 	}
 
 
-	String path = "skins/" + g_application->GetCurrentSkin() + "/textures/" + filename;
+	String path = ".usc/skins/" + g_application->GetCurrentSkin() + "/textures/" + filename;
 	path = Path::Absolute(path);
 
 	newTexture->nvgTexture = nvgCreateImage(g_guiState.vg, path.c_str(), imageflags);
