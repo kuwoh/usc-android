@@ -306,8 +306,8 @@ private:
 
 		m_chartHash = hash;
 
-		Path::CreateDir(Path::Absolute("/storage/emulated/0/.usc/replays/" + hash));
-		m_replayPath = Path::Normalize(Path::Absolute("/storage/emulated/0/.usc/replays/" + chart->hash + "/" + Shared::Time::Now().ToString() + ".urf"));
+		Path::CreateDir(Path::Absolute(".usc/replays/" + hash));
+		m_replayPath = Path::Normalize(Path::Absolute(".usc/replays/" + chart->hash + "/" + Shared::Time::Now().ToString() + ".urf"));
 
 		AutoSaveReplaySettings replaySetting = g_gameConfig.GetEnum<Enum_AutoSaveReplaySettings>(GameConfigKeys::AutoSaveReplay);
 		if (replaySetting == AutoSaveReplaySettings::Always ||

@@ -6,14 +6,14 @@
 /*
 	Common
 */
-String Path::gameDir = "/storage/emulated/0/.usc/";
+String Path::gameDir = ".usc/";
 
 String Path::Absolute(const String& path)
 {
 	if(IsAbsolute(path))
 		return path;
 
-	String baseDir = "/storage/emulated/0/.usc/";
+	String baseDir = ".usc/";
 
 	return baseDir + sep + path;
 }
