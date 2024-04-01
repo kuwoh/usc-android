@@ -1562,7 +1562,7 @@ public:
 				ChartIndex* sel = m_selectionWheel->GetSelectedChart();
 				if (sel) {
 					String& hash = sel->hash;
-					String replayPath = Path::Normalize(Path::Absolute("replays/" + hash + "/"));
+					String replayPath = Path::Normalize(Path::Absolute("/storage/emulated/0/.usc/replays/" + hash + "/"));
 					Path::ShowInFileBrowser(replayPath);
 				}
 			}

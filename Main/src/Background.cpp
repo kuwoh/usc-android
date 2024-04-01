@@ -109,7 +109,7 @@ public:
 			return false;
 
 		defaultBGs = Path::GetSubDirs(Path::Normalize(
-			Path::Absolute(".usc/skins/" + g_application->GetCurrentSkin() + "/backgrounds/")));
+			Path::Absolute("/storage/emulated/0/.usc/skins/" + g_application->GetCurrentSkin() + "/backgrounds/")));
 
 		String skin = g_gameConfig.GetString(GameConfigKeys::Skin);
 		lua = luaL_newstate();
@@ -196,7 +196,7 @@ public:
 		if (defaultBGs.Contains(layer))
 		{
 			//default bg: load from skin path
-			folderPath = ".usc/skins/" +
+			folderPath = "/storage/emulated/0/.usc/skins/" +
 						 g_application->GetCurrentSkin() + Path::sep +
 						 "backgrounds" + Path::sep +
 						 layer +
@@ -217,7 +217,7 @@ public:
 			return true;
 
 		Logf("Failed to load %s at path: \"%s\" Attempting to load fallback instead.", Logger::Severity::Warning, foreground ? "foreground" : "background", folderPath);
-		path = Path::Absolute(".usc/skins/" + skin + "/backgrounds/fallback/");
+		path = Path::Absolute("/storage/emulated/0/.usc/skins/" + skin + "/backgrounds/fallback/");
 		folderPath = path;
 		path = Path::Normalize(path + fname);
 		return m_init(path);
@@ -369,9 +369,9 @@ public:
 	Material LoadBackgroundMaterial(const String &path)
 	{
 		String skin = g_gameConfig.GetString(GameConfigKeys::Skin);
-		String pathV = Path::Absolute(String(".usc/skins/" + skin + "/shaders/") + "background" + ".vs");
+		String pathV = Path::Absolute(String("/storage/emulated/0/.usc/skins/" + skin + "/shaders/") + "background" + ".vs");
 		String pathF = Path::Absolute(path);
-		String pathG = Path::Absolute(String(".usc/skins/" + skin + "/shaders/") + "background" + ".gs");
+		String pathG = Path::Absolute(String("/storage/emulated/0/.usc/skins/" + skin + "/shaders/") + "background" + ".gs");
 		Material ret = MaterialRes::Create(g_gl, pathV, pathF);
 		// Additionally load geometry shader
 		if (Path::FileExists(pathG))

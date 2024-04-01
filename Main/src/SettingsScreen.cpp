@@ -903,7 +903,7 @@ private:
 			if (!m_removeMissingScores)
 				continue;
 
-			String replayPath = Path::Normalize(Path::Absolute("replays/" + chart->hash + "/"));
+			String replayPath = Path::Normalize(Path::Absolute("/storage/emulated/0/.usc/replays/" + chart->hash + "/"));
 			Vector<FileInfo> files = Files::ScanFiles(replayPath, "urf");
 			for (auto& s : files)
 			{
@@ -1073,7 +1073,7 @@ protected:
 			m_skinConfig = new SkinConfig(m_skin);
 		}
 
-		m_allSkins = Path::GetSubDirs(Path::Normalize(Path::Absolute("skins/")));
+		m_allSkins = Path::GetSubDirs(Path::Normalize(Path::Absolute("/storage/emulated/0/.usc/skins/")));
 		m_skinConfigTextData.clear();
 		m_useHSVMap.clear();
 	}
@@ -1105,7 +1105,7 @@ protected:
 
 		if (SkinSelectionSetting("Selected skin:"))
 		{
-			Image cursorImg = ImageRes::Create(Path::Absolute("skins/" + g_gameConfig.GetString(GameConfigKeys::Skin) + "/textures/cursor.png"));
+			Image cursorImg = ImageRes::Create(Path::Absolute("/storage/emulated/0/.usc/skins/" + g_gameConfig.GetString(GameConfigKeys::Skin) + "/textures/cursor.png"));
 			g_gameWindow->SetCursor(cursorImg, Vector2i(5, 5));
 		}
 

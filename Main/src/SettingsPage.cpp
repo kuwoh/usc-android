@@ -327,7 +327,7 @@ protected:
 		m_profiles.clear();
 		m_profiles.push_back("Main");
 
-		Vector<FileInfo> profiles = Files::ScanFiles(Path::Absolute("profiles/"), "cfg", NULL);
+		Vector<FileInfo> profiles = Files::ScanFiles(Path::Absolute("/storage/emulated/0/.usc/profiles/"), "cfg", NULL);
 
 		for (const auto& file : profiles)
 		{
@@ -416,8 +416,8 @@ protected:
 			|| profile[profile.length() - 1] == '.')
 			return;
 
-		if (!Path::IsDirectory(Path::Absolute("profiles")))
-			Path::CreateDir(Path::Absolute("profiles"));
+		if (!Path::IsDirectory(Path::Absolute("/storage/emulated/0/.usc/profiles")))
+			Path::CreateDir(Path::Absolute("/storage/emulated/0/.usc/profiles"));
 
 
 		// Save old setting

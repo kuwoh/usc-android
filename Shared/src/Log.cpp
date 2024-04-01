@@ -32,7 +32,7 @@ public:
 #endif
 
 		// Log to file
-		String logPath = Path::Absolute(Utility::Sprintf("log_%s.txt", moduleName));
+		String logPath = Path::Absolute(Utility::Sprintf("/storage/emulated/0/.usc/log_%s.txt", moduleName));
 		if (!m_logFile.OpenWrite(logPath, false, true))
 		{
 			m_failedToOpen = true;
