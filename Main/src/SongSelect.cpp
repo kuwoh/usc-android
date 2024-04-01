@@ -145,7 +145,7 @@ public:
 	bool Init() override
 	{
 		SongItemSelectionWheel::Init();
-		CheckedLoad(m_lua = g_application->LoadScript(".usc/songselect/songwheel"));
+		CheckedLoad(m_lua = g_application->LoadScript("sdcard0/.usc/songselect/songwheel"));
 		lua_newtable(m_lua);
 		{
 			//text
@@ -162,7 +162,7 @@ public:
 	}
 	void ReloadScript() override
 	{
-		g_application->ReloadScript(".usc/songselect/songwheel", m_lua);
+		g_application->ReloadScript("sdcard0/.usc/songselect/songwheel", m_lua);
 
 		m_SetLuaItemIndex();
 		m_SetLuaDiffIndex();
@@ -181,7 +181,7 @@ public:
 		lua_pushnumber(m_lua, deltaTime);
 		if (lua_pcall(m_lua, 1, 0, 0) != 0)
 		{
-			g_application->ScriptError(".usc/songselect/songwheel", m_lua);
+			g_application->ScriptError("sdcard0/.usc/songselect/songwheel", m_lua);
 		}
 	}
 	virtual ~SelectionWheel()
@@ -506,12 +506,12 @@ public:
 		{
 			AddFilter(new LevelFilter(i), FilterType::Level);
 		}
-		CheckedLoad(m_lua = g_application->LoadScript(".usc/songselect/filterwheel"));
+		CheckedLoad(m_lua = g_application->LoadScript("sdcard0/.usc/songselect/filterwheel"));
 		return true;
 	}
 	void ReloadScript()
 	{
-		g_application->ReloadScript(".usc/songselect/filterwheel", m_lua);
+		g_application->ReloadScript("sdcard0/.usc/songselect/filterwheel", m_lua);
 	}
 	void Render(float deltaTime)
 	{
@@ -520,7 +520,7 @@ public:
 		lua_pushboolean(m_lua, Active);
 		if (lua_pcall(m_lua, 2, 0, 0) != 0)
 		{
-			g_application->ScriptError(".usc/songselect/filterwheel", m_lua);
+			g_application->ScriptError("sdcard0/.usc/songselect/filterwheel", m_lua);
 		}
 	}
 	~FilterSelection()
@@ -846,7 +846,7 @@ public:
 			m_sorts.Add(new EffectorSort("Effector v", true));
 		}
 
-		CheckedLoad(m_lua = g_application->LoadScript(".usc/songselect/sortwheel"));
+		CheckedLoad(m_lua = g_application->LoadScript("sdcard0/.usc/songselect/sortwheel"));
 		m_SetLuaTable();
 
 		Initialized = true;
@@ -864,7 +864,7 @@ public:
 		lua_pushnumber(m_lua, m_selection + 1);
 		if (lua_pcall(m_lua, 1, 0, 0) != 0)
 		{
-			g_application->ScriptError(".usc/songselect/sortwheel", m_lua);
+			g_application->ScriptError("sdcard0/.usc/songselect/sortwheel", m_lua);
 		}
 	}
 
@@ -875,7 +875,7 @@ public:
 		lua_pushboolean(m_lua, Active);
 		if (lua_pcall(m_lua, 2, 0, 0) != 0)
 		{
-			g_application->ScriptError(".usc/songselect/sortwheel", m_lua);
+			g_application->ScriptError("sdcard0/.usc/songselect/sortwheel", m_lua);
 		}
 	}
 
@@ -1562,7 +1562,7 @@ public:
 				ChartIndex* sel = m_selectionWheel->GetSelectedChart();
 				if (sel) {
 					String& hash = sel->hash;
-					String replayPath = Path::Normalize(Path::Absolute(".usc/replays/" + hash + "/"));
+					String replayPath = Path::Normalize(Path::Absolute("sdcard0/.usc/replays/" + hash + "/"));
 					Path::ShowInFileBrowser(replayPath);
 				}
 			}

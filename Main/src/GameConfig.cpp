@@ -87,8 +87,8 @@ void GameConfig::InitDefaults()
 	Set(GameConfigKeys::GaugeDrainHalf, 300);
 	Set(GameConfigKeys::ModSpeed, 300.0f);
 	Set(GameConfigKeys::AutoSaveSpeed, true);
-	Set(GameConfigKeys::SongFolder, ".usc/songs");
-	Set(GameConfigKeys::Skin, ".usc/Skins/Default");
+	Set(GameConfigKeys::SongFolder, "sdcard0/.usc/songs");
+	Set(GameConfigKeys::Skin, "sdcard0/.usc/Skins/Default");
 	Set(GameConfigKeys::Laser0Color, 200.0f);
 	Set(GameConfigKeys::Laser1Color, 330.0f);
 	Set(GameConfigKeys::SongSelSensMult, 1.0f);
