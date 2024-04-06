@@ -30,7 +30,7 @@ SkinConfig::SkinConfig(const String& skin)
 	};
 
 	File defFile;
-	String configPath = Path::Normalize(Path::Absolute("sdcard0/.usc/skins/" + skin + "/config-definitions.json"));
+	String configPath = Path::Normalize(Path::Absolute("skins/" + skin + "/config-definitions.json"));
 	//Log(configPath);
 	if(defFile.OpenRead(configPath))
 	{
@@ -165,7 +165,7 @@ SkinConfig::SkinConfig(const String& skin)
 	}
 
     InitDefaults();
-	Load(Path::Normalize(Path::Absolute("sdcard0/.usc/skins/" + skin + "/skin.cfg")));
+	Load(Path::Normalize(Path::Absolute("skins/" + skin + "/skin.cfg")));
 }
 
 SkinConfig::~SkinConfig()
@@ -174,7 +174,7 @@ SkinConfig::~SkinConfig()
 	{
 		m_reverseKeys.Add(it.second, it.first);
 	}
-	Save(Path::Normalize(Path::Absolute("sdcard0/.usc/skins/" + m_skin + "/skin.cfg")));
+	Save(Path::Normalize(Path::Absolute("skins/" + m_skin + "/skin.cfg")));
 	for (auto s : m_settings)
 	{
 		if (s.type == SkinSetting::Type::Color)

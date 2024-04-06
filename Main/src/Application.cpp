@@ -302,7 +302,7 @@ void Application::m_unpackSkins()
 {
 	bool interrupt = false;
 	Vector<FileInfo> files = Files::ScanFiles(
-		Path::Absolute("sdcard0/.usc/skins/"), "usc-skin", &interrupt);
+		Path::Absolute("skins/"), "usc-skin", &interrupt);
 	if (interrupt)
 		return;
 
@@ -390,7 +390,7 @@ void Application::m_unpackSkins()
 		}
 
 		// Use the zip name as the directory if there is no single dir
-		String dest = Path::Absolute("sdcard0/.usc/skins/");
+		String dest = Path::Absolute("skins/");
 		if (!singleDir)
 			dest = fi.fullPath.substr(0, fi.fullPath.length() - 9) + Path::sep;
 
@@ -522,7 +522,7 @@ bool Application::m_LoadConfig(String profileName /* must be by value */)
 
 	bool successful = false;
 
-	String configPath = "sdcard0/.usc/Main.cfg";
+	String configPath = "Main.cfg";
 	File mainConfigFile;
 	if (mainConfigFile.OpenRead(Path::Absolute(configPath)))
 	{
@@ -579,7 +579,7 @@ void Application::m_SaveConfig()
 		return;
 
 	String profile = g_gameConfig.GetString(GameConfigKeys::CurrentProfileName);
-	String configPath = "sdcard0/.usc/Main.cfg";
+	String configPath = "Main.cfg";
 	if (profile == "Main")
 	{
 		//Save everything into main.cfg
@@ -624,7 +624,7 @@ void Application::m_SaveConfig()
 	}
 
 	// Now save the profile only settings
-	configPath = Path::Normalize("sdcard0/.usc/profiles/" + profile + ".cfg");
+	configPath = Path::Normalize("profiles/" + profile + ".cfg");
 
 	GameConfig tmp_gc;
 	{
@@ -1086,7 +1086,7 @@ bool Application::m_Init()
 	m_skin = g_gameConfig.GetString(GameConfigKeys::Skin);
 
 	// Fallback to default if not found
-	if (!Path::FileExists(Path::Absolute("sdcard0/.usc/skins/" + m_skin)))
+	if (!Path::FileExists(Path::Absolute("skins/" + m_skin)))
 	{
 		m_skin = "Default";
 		g_gameConfig.Set(GameConfigKeys::Skin, m_skin);
@@ -1209,10 +1209,10 @@ bool Application::m_Init()
 
 	///TODO: check if directory exists already?
 	Path::CreateDir(Path::Absolute(".usc"));
-	Path::CreateDir(Path::Absolute("sdcard0/.usc/screenshots"));
-	Path::CreateDir(Path::Absolute("sdcard0/.usc/songs"));
-	Path::CreateDir(Path::Absolute("sdcard0/.usc/replays"));
-	Path::CreateDir(Path::Absolute("sdcard0/.usc/crash_dumps"));
+	Path::CreateDir(Path::Absolute("screenshots"));
+	Path::CreateDir(Path::Absolute("songs"));
+	Path::CreateDir(Path::Absolute("replays"));
+	Path::CreateDir(Path::Absolute("crash_dumps"));
 	Logger::Get().SetLogLevel(g_gameConfig.GetEnum<Logger::Enum_Severity>(GameConfigKeys::LogLevel));
 	return true;
 }
@@ -1712,13 +1712,13 @@ Material Application::LoadMaterial(const String &name, const String &path)
 		ret->AssignShader(ShaderType::Geometry, gshader);
 	}
 	if (!ret)
-		g_gameWindow->ShowMessageBox("Shader Error", "sdcard0/.usc/ shaders "+path+name+".vs and "+path+name+".fs", 0);
+		g_gameWindow->ShowMessageBox("Shader Error", " shaders "+path+name+".vs and "+path+name+".fs", 0);
 	assert(ret);
 	return ret;
 }
 Material Application::LoadMaterial(const String &name)
 {
-	return LoadMaterial(name, String("sdcard0/.usc/skins/") + m_skin + String("/shaders/"));
+	return LoadMaterial(name, String("skins/") + m_skin + String("/shaders/"));
 }
 Sample Application::LoadSample(const String &name, const bool &external)
 {
@@ -1726,7 +1726,7 @@ Sample Application::LoadSample(const String &name, const bool &external)
 	if (external)
 		path = name;
 	else
-		path = Path::Absolute(String("sdcard0/.usc/skins/") + m_skin + String("/audio/") + name);
+		path = Path::Absolute(String("skins/") + m_skin + String("/audio/") + name);
 
 #ifndef ANDROID // I don't know why this is not working on android
 	path = Path::Normalize(path);
@@ -1750,7 +1750,7 @@ Graphics::Font Application::LoadFont(const String &name, const bool &external)
 	if (external)
 		path = name;
 	else
-		path = String("sdcard0/.usc/skins/") + m_skin + String("/fonts/") + name;
+		path = String("skins/") + m_skin + String("/fonts/") + name;
 
 	Graphics::Font newFont = FontRes::Create(g_gl, path);
 	m_fonts.Add(name, newFont);
@@ -1792,7 +1792,7 @@ void Application::SetScriptPath(lua_State *s)
 {
 	//Set path for 'require' (https://stackoverflow.com/questions/4125971/setting-the-global-lua-path-variable-from-c-c?lq=1)
 	String lua_path = Path::Normalize(
-		Path::Absolute("sdcard0/.usc/skins/" + m_skin + "/scripts/?.lua;") + Path::Absolute("./skins/" + m_skin + "/scripts/?"));
+		Path::Absolute("skins/" + m_skin + "/scripts/?.lua;") + Path::Absolute("./skins/" + m_skin + "/scripts/?"));
 
 	lua_getglobal(s, "package");
 	lua_getfield(s, -1, "path");				// get field "path" from table at top of stack (-1)
@@ -1826,15 +1826,15 @@ lua_State *Application::LoadScript(const String &name, bool noError)
 	luaL_openlibs(s);
 	SetScriptPath(s);
 
-	String path = "sdcard0/.usc/skins/" + m_skin + "/scripts/" + name + ".lua";
-	String commonPath = "sdcard0/.usc/skins/" + m_skin + "/scripts/" + "common.lua";
+	String path = "skins/" + m_skin + "/scripts/" + name + ".lua";
+	String commonPath = "skins/" + m_skin + "/scripts/" + "common.lua";
 	path = Path::Absolute(path);
 	commonPath = Path::Absolute(commonPath);
 
 	// If we can't find this file, copy it from the default skin
 	if (!Path::FileExists(path))
 	{
-		String defaultPath = Path::Absolute("sdcard0/.usc/skins/Default/scripts/" + name + ".lua");
+		String defaultPath = Path::Absolute("skins/Default/scripts/" + name + ".lua");
 		if (Path::FileExists(defaultPath))
 		{
 			bool copyDefault = g_gameWindow->ShowYesNoMessage("Missing " + name + ".lua", "No " + name + ".lua file could be found, suggested solution:\n"
@@ -1861,8 +1861,8 @@ lua_State *Application::LoadScript(const String &name, bool noError)
 bool Application::ReloadScript(const String &name, lua_State *L)
 {
 	SetScriptPath(L);
-	String path = "sdcard0/.usc/skins/" + m_skin + "/scripts/" + name + ".lua";
-	String commonPath = "sdcard0/.usc/skins/" + m_skin + "/scripts/" + "common.lua";
+	String path = "skins/" + m_skin + "/scripts/" + name + ".lua";
+	String commonPath = "skins/" + m_skin + "/scripts/" + "common.lua";
 	DisposeGUI(L);
 	m_skinHttp.ClearState(L);
 	m_skinIR.ClearState(L);
@@ -2393,7 +2393,7 @@ static int lCreateSkinImage(lua_State *L /*const char* filename, int imageflags 
 {
 	const char *filename = luaL_checkstring(L, 1);
 	int imageflags = luaL_checkinteger(L, 2);
-	String path = "sdcard0/.usc/skins/" + g_application->GetCurrentSkin() + "/textures/" + filename;
+	String path = "skins/" + g_application->GetCurrentSkin() + "/textures/" + filename;
 	path = Path::Absolute(path);
 	int handle = nvgCreateImage(g_guiState.vg, path.c_str(), imageflags);
 	if (handle != 0)
@@ -2437,7 +2437,7 @@ static int lLoadSkinAnimation(lua_State *L)
 static int lLoadSkinFont(lua_State *L /*const char* name */)
 {
 	const char *name = luaL_checkstring(L, 1);
-	String path = "sdcard0/.usc/skins/" + g_application->GetCurrentSkin() + "/fonts/" + name;
+	String path = "skins/" + g_application->GetCurrentSkin() + "/fonts/" + name;
 	path = Path::Absolute(path);
 	return LoadFont(name, path.c_str(), L);
 }
@@ -2672,7 +2672,7 @@ int lLoadSharedSkinTexture(lua_State* L) {
 	}
 
 
-	String path = "sdcard0/.usc/skins/" + g_application->GetCurrentSkin() + "/textures/" + filename;
+	String path = "skins/" + g_application->GetCurrentSkin() + "/textures/" + filename;
 	path = Path::Absolute(path);
 
 	newTexture->nvgTexture = nvgCreateImage(g_guiState.vg, path.c_str(), imageflags);
