@@ -1697,9 +1697,9 @@ Texture Application::LoadTexture(const String &name, const bool &external)
 }
 Material Application::LoadMaterial(const String &name, const String &path)
 {
-	String pathV = baseDir + path + name + ".vs";
-	String pathF = baseDir + path + name + ".fs";
-	String pathG = baseDir + path + name + ".gs";
+	String pathV = "/sdcard/.usc/" + path + name + ".vs";
+	String pathF = "/sdcard/.usc/" + path + name + ".fs";
+	String pathG = "/sdcard/.usc/" + path + name + ".gs";
 	pathV = Path::Absolute(pathV);
 	pathF = Path::Absolute(pathF);
 	pathG = Path::Absolute(pathG);
