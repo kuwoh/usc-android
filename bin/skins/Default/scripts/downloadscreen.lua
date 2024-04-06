@@ -27,7 +27,7 @@ for i = 1, 20 do
     selectedLevels[i] = false
 end
 
-local cachepath = path.Absolute("skins/" .. game.GetSkin() .. "/nautica.json")
+local cachepath = path.Absolute(baseDir+"skins/" .. game.GetSkin() .. "/nautica.json")
 local levelcursor = 0
 local sortingcursor = 0
 local sortingOptions = {"Uploaded", "Oldest"}

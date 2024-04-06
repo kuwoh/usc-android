@@ -302,7 +302,7 @@ void Application::m_unpackSkins()
 {
 	bool interrupt = false;
 	Vector<FileInfo> files = Files::ScanFiles(
-		Path::Absolute("skins/"), "usc-skin", &interrupt);
+		Path::Absolute(baseDir + "skins/"), "usc-skin", &interrupt);
 	if (interrupt)
 		return;
 
@@ -390,7 +390,7 @@ void Application::m_unpackSkins()
 		}
 
 		// Use the zip name as the directory if there is no single dir
-		String dest = Path::Absolute("skins/");
+		String dest = Path::Absolute(baseDir + "skins/");
 		if (!singleDir)
 			dest = fi.fullPath.substr(0, fi.fullPath.length() - 9) + Path::sep;
 
@@ -1086,7 +1086,7 @@ bool Application::m_Init()
 	m_skin = g_gameConfig.GetString(GameConfigKeys::Skin);
 
 	// Fallback to default if not found
-	if (!Path::FileExists(Path::Absolute("skins/" + m_skin)))
+	if (!Path::FileExists(Path::Absolute(baseDir + "skins/" + m_skin)))
 	{
 		m_skin = "Default";
 		g_gameConfig.Set(GameConfigKeys::Skin, m_skin);
@@ -1095,7 +1095,7 @@ bool Application::m_Init()
 	g_skinConfig = new SkinConfig(m_skin);
 
 	// Window cursor
-	Image cursorImg = ImageRes::Create(Path::Absolute("skins/" + m_skin + "/textures/cursor.png"));
+	Image cursorImg = ImageRes::Create(Path::Absolute(baseDir + "skins/" + m_skin + "/textures/cursor.png"));
 	g_gameWindow->SetCursor(cursorImg, Vector2i(5, 5));
 
 	m_UpdateWindowPosAndShape(fullscreenMonitor, startFullscreen, g_gameConfig.GetBool(GameConfigKeys::AdjustWindowPositionOnStartup));
@@ -1668,7 +1668,7 @@ RenderQueue *Application::GetRenderQueueBase()
 
 Graphics::Image Application::LoadImage(const String &name)
 {
-	String path = String("skins/") + m_skin + String("/textures/") + name;
+	String path = String(baseDir + "skins/") + m_skin + String("/textures/") + name;
 	return ImageRes::Create(Path::Absolute(path));
 }
 
@@ -1718,7 +1718,7 @@ Material Application::LoadMaterial(const String &name, const String &path)
 }
 Material Application::LoadMaterial(const String &name)
 {
-	return LoadMaterial(name, String("skins/") + m_skin + String("/shaders/"));
+	return LoadMaterial(name, String(baseDir + "skins/") + m_skin + String("/shaders/"));
 }
 Sample Application::LoadSample(const String &name, const bool &external)
 {
@@ -1726,7 +1726,7 @@ Sample Application::LoadSample(const String &name, const bool &external)
 	if (external)
 		path = name;
 	else
-		path = Path::Absolute(String("skins/") + m_skin + String("/audio/") + name);
+		path = Path::Absolute(String(baseDir + "skins/") + m_skin + String("/audio/") + name);
 
 #ifndef ANDROID // I don't know why this is not working on android
 	path = Path::Normalize(path);
@@ -1750,7 +1750,7 @@ Graphics::Font Application::LoadFont(const String &name, const bool &external)
 	if (external)
 		path = name;
 	else
-		path = String("skins/") + m_skin + String("/fonts/") + name;
+		path = String(baseDir + "skins/") + m_skin + String("/fonts/") + name;
 
 	Graphics::Font newFont = FontRes::Create(g_gl, path);
 	m_fonts.Add(name, newFont);
@@ -1792,7 +1792,7 @@ void Application::SetScriptPath(lua_State *s)
 {
 	//Set path for 'require' (https://stackoverflow.com/questions/4125971/setting-the-global-lua-path-variable-from-c-c?lq=1)
 	String lua_path = Path::Normalize(
-		Path::Absolute("skins/" + m_skin + "/scripts/?.lua;") + Path::Absolute("./skins/" + m_skin + "/scripts/?"));
+		Path::Absolute(baseDir + "skins/" + m_skin + "/scripts/?.lua;") + Path::Absolute("./skins/" + m_skin + "/scripts/?"));
 
 	lua_getglobal(s, "package");
 	lua_getfield(s, -1, "path");				// get field "path" from table at top of stack (-1)
@@ -1826,15 +1826,15 @@ lua_State *Application::LoadScript(const String &name, bool noError)
 	luaL_openlibs(s);
 	SetScriptPath(s);
 
-	String path = "skins/" + m_skin + "/scripts/" + name + ".lua";
-	String commonPath = "skins/" + m_skin + "/scripts/" + "common.lua";
+	String path = baseDir + "skins/" + m_skin + "/scripts/" + name + ".lua";
+	String commonPath = baseDir + "skins/" + m_skin + "/scripts/" + "common.lua";
 	path = Path::Absolute(path);
 	commonPath = Path::Absolute(commonPath);
 
 	// If we can't find this file, copy it from the default skin
 	if (!Path::FileExists(path))
 	{
-		String defaultPath = Path::Absolute("skins/Default/scripts/" + name + ".lua");
+		String defaultPath = Path::Absolute(baseDir + "skins/Default/scripts/" + name + ".lua");
 		if (Path::FileExists(defaultPath))
 		{
 			bool copyDefault = g_gameWindow->ShowYesNoMessage("Missing " + name + ".lua", "No " + name + ".lua file could be found, suggested solution:\n"
@@ -1861,8 +1861,8 @@ lua_State *Application::LoadScript(const String &name, bool noError)
 bool Application::ReloadScript(const String &name, lua_State *L)
 {
 	SetScriptPath(L);
-	String path = "skins/" + m_skin + "/scripts/" + name + ".lua";
-	String commonPath = "skins/" + m_skin + "/scripts/" + "common.lua";
+	String path = baseDir + "skins/" + m_skin + "/scripts/" + name + ".lua";
+	String commonPath = baseDir + "skins/" + m_skin + "/scripts/" + "common.lua";
 	DisposeGUI(L);
 	m_skinHttp.ClearState(L);
 	m_skinIR.ClearState(L);
@@ -2393,7 +2393,7 @@ static int lCreateSkinImage(lua_State *L /*const char* filename, int imageflags 
 {
 	const char *filename = luaL_checkstring(L, 1);
 	int imageflags = luaL_checkinteger(L, 2);
-	String path = "skins/" + g_application->GetCurrentSkin() + "/textures/" + filename;
+	String path = baseDir + "skins/" + g_application->GetCurrentSkin() + "/textures/" + filename;
 	path = Path::Absolute(path);
 	int handle = nvgCreateImage(g_guiState.vg, path.c_str(), imageflags);
 	if (handle != 0)
@@ -2424,7 +2424,7 @@ static int lLoadSkinAnimation(lua_State *L)
 		compressed = lua_toboolean(L, 4) == 1;
 	}
 
-	String path = "skins/" + g_application->GetCurrentSkin() + "/textures/" + p;
+	String path = baseDir + "skins/" + g_application->GetCurrentSkin() + "/textures/" + p;
 	path = Path::Absolute(path);
 	int result = LoadAnimation(L, *path, frametime, loopcount, compressed);
 	if (result == -1)
@@ -2437,7 +2437,7 @@ static int lLoadSkinAnimation(lua_State *L)
 static int lLoadSkinFont(lua_State *L /*const char* name */)
 {
 	const char *name = luaL_checkstring(L, 1);
-	String path = "skins/" + g_application->GetCurrentSkin() + "/fonts/" + name;
+	String path = baseDir + "skins/" + g_application->GetCurrentSkin() + "/fonts/" + name;
 	path = Path::Absolute(path);
 	return LoadFont(name, path.c_str(), L);
 }
@@ -2672,7 +2672,7 @@ int lLoadSharedSkinTexture(lua_State* L) {
 	}
 
 
-	String path = "skins/" + g_application->GetCurrentSkin() + "/textures/" + filename;
+	String path = baseDir + "skins/" + g_application->GetCurrentSkin() + "/textures/" + filename;
 	path = Path::Absolute(path);
 
 	newTexture->nvgTexture = nvgCreateImage(g_guiState.vg, path.c_str(), imageflags);
