@@ -1697,9 +1697,9 @@ Texture Application::LoadTexture(const String &name, const bool &external)
 }
 Material Application::LoadMaterial(const String &name, const String &path)
 {
-	String pathV = path + name + ".vs";
-	String pathF = path + name + ".fs";
-	String pathG = path + name + ".gs";
+	String pathV = baseDir + path + name + ".vs";
+	String pathF = baseDir + path + name + ".fs";
+	String pathG = baseDir + path + name + ".gs";
 	pathV = Path::Absolute(pathV);
 	pathF = Path::Absolute(pathF);
 	pathG = Path::Absolute(pathG);
@@ -1712,7 +1712,7 @@ Material Application::LoadMaterial(const String &name, const String &path)
 		ret->AssignShader(ShaderType::Geometry, gshader);
 	}
 	if (!ret)
-		g_gameWindow->ShowMessageBox("Shader Error", " shaders "+path+name+".vs and "+path+name+".fs", 0);
+		g_gameWindow->ShowMessageBox("Shader Error", " shaders "+baseDir+path+name+".vs and "+path+name+".fs", 0);
 	assert(ret);
 	return ret;
 }
