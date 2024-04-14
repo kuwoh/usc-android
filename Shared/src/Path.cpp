@@ -6,16 +6,14 @@
 /*
 	Common
 */
-String Path::gameDir = "/sdcard/.usc/";
+String Path::gameDir = "/sdcard0/.usc/";
 
 String Path::Absolute(const String& path)
 {
 	if(IsAbsolute(path))
 		return path;
 
-	String baseDir = "/sdcard/.usc";
-
-	return baseDir + sep + path;
+	return gameDir + sep + path;
 }
 String Path::RemoveLast(const String& path, String* lastOut /*= nullptr*/)
 {
