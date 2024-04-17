@@ -6,7 +6,7 @@
 /*
 	Common
 */
-String Path::gameDir = "/sdcard0/.usc/";
+String Path::gameDir = "/storage/emulated/0/.usc";
 
 String Path::Absolute(const String& path)
 {

@@ -522,7 +522,7 @@ bool Application::m_LoadConfig(String profileName /* must be by value */)
 
 	bool successful = false;
 
-	String configPath = "Main.cfg";
+	String configPath = baseDir + "Main.cfg";
 	File mainConfigFile;
 	if (mainConfigFile.OpenRead(Path::Absolute(configPath)))
 	{
