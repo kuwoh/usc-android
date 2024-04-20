@@ -293,7 +293,7 @@ bool FastGuiGame::Init(Game* game)
 
 
 	const auto& settings = game->GetBeatmap()->GetMapSettings();
-	const auto jacketPath = Path::Absolute(game->GetChartRootPath() + Path::sep + settings.jacketPath);
+	const auto jacketPath = "/sdcard/usc/"+game->GetChartRootPath() + Path::sep + settings.jacketPath);
 	if (Path::FileExists(jacketPath))
 	{
 		m_jacketImage = ImageRes::Create(jacketPath);
@@ -309,7 +309,7 @@ bool FastGuiGame::Init(Game* game)
 		}
 	}
 
-	String fontpath = Path::Normalize(Path::Absolute("fonts/settings/NotoSans-Regular.ttf"));
+	String fontpath = Path::Normalize("/sdcard/usc/fonts/settings/NotoSans-Regular.ttf");
 	m_font = g_application->LoadFont(fontpath, true);
 	if (!m_font)
 		return false;

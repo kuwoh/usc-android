@@ -268,7 +268,7 @@ void DownloadScreen::OnKeyReleased(SDL_Scancode code, int32 delta)
 void DownloadScreen::m_ArchiveLoop()
 {
 	{
-		String preview_path = Path::Normalize(Path::Absolute("preview/"));
+		String preview_path = Path::Normalize("/sdcard/usc/preview/"));
 		Vector<String> exts = { "mp3", "oog", "wav" };
 		Map<String, Vector<FileInfo>> previews = Files::ScanFilesRecursive(preview_path, exts, nullptr);
 		uint64 now = Shared::Time::Now().Data();
@@ -511,7 +511,7 @@ int DownloadScreen::m_DownloadArchive(lua_State* L)
 
 int DownloadScreen::m_GetSongsPath(lua_State * L)
 {
-	lua_pushstring(L, *Path::Normalize(Path::Absolute(g_gameConfig.GetString(GameConfigKeys::SongFolder))));
+	lua_pushstring(L, *Path::Normalize("/sdcard/usc/"+g_gameConfig.GetString(GameConfigKeys::SongFolder)));
 	return 1;
 }
 
@@ -596,9 +596,9 @@ int DownloadScreen::m_PlayPreview(lua_State* L)
 
 	String ext = Path::GetExtension(url);
 
-	String preview_path = Path::Normalize(Path::Absolute("preview/" + song_id + "." + ext ));
+	String preview_path = Path::Normalize("/sdcard/usc/preview/" + song_id + "." + ext );
 	// Create dir if it doesn't exist
-	Path::CreateDir(Path::Absolute("preview"));
+	Path::CreateDir("/sdcard/usc/preview");
 
 	bool hasFile = Path::FileExists(preview_path);
 

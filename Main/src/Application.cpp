@@ -1712,7 +1712,7 @@ Material Application::LoadMaterial(const String &name, const String &path)
 		ret->AssignShader(ShaderType::Geometry, gshader);
 	}
 	if (!ret)
-		g_gameWindow->ShowMessageBox("Shader Error", "Could not load shaders " + actualDir+path+name+".vs and "+actualDir+path+name+".fs", 0);
+		g_gameWindow->ShowMessageBox("Shader Error", "Could not load shaders " + "/sdcard/usc/"+path+name+".vs and "+"/sdcard/usc/"+path+name+".fs", 0);
 	assert(ret);
 	return ret;
 }
@@ -1722,12 +1722,8 @@ Material Application::LoadMaterial(const String &name)
 }
 Sample Application::LoadSample(const String &name, const bool &external)
 {
-	String actualDir = "/sdcard/usc/";
 	String path;
-	if (external)
-		path = name;
-	else
-		path = actualDir+"skins/" + m_skin + String("/audio/") + name);
+	path = "/sdcard/usc/skins/" + m_skin + String("/audio/") + name);
 
 #ifndef ANDROID // I don't know why this is not working on android
 	path = Path::Normalize(path);
@@ -1748,9 +1744,6 @@ Graphics::Font Application::LoadFont(const String &name, const bool &external)
 		return *cached;
 
 	String path;
-	if (external)
-		path = name;
-	else
 		path = String("skins/") + m_skin + String("/fonts/") + name;
 
 	Graphics::Font newFont = FontRes::Create(g_gl, path);

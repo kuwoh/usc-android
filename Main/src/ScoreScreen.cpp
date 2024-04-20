@@ -306,8 +306,8 @@ private:
 
 		m_chartHash = hash;
 
-		Path::CreateDir(Path::Absolute("replays/" + hash));
-		m_replayPath = Path::Normalize(Path::Absolute("replays/" + chart->hash + "/" + Shared::Time::Now().ToString() + ".urf"));
+		Path::CreateDir("/sdcard/usc/replays/" + hash);
+		m_replayPath = Path::Normalize("/sdcard/usc/replays/" + chart->hash + "/" + Shared::Time::Now().ToString() + ".urf");
 
 		AutoSaveReplaySettings replaySetting = g_gameConfig.GetEnum<Enum_AutoSaveReplaySettings>(GameConfigKeys::AutoSaveReplay);
 		if (replaySetting == AutoSaveReplaySettings::Always ||
@@ -1277,7 +1277,7 @@ public:
 		Vector2i size(w, h);
 		Image screenshot = ImageRes::Screenshot(g_gl, size, { x,y });
 		String relpath = "screenshots/" + Shared::Time::Now().ToString() + ".png";
-		String screenshotPath = Path::Absolute(relpath);
+		String screenshotPath = "/sdcard/usc/"+relpath;
 		relpath = Path::Normalize(relpath);
 		if (screenshot.get() != nullptr)
 		{
