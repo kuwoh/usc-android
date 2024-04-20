@@ -11,7 +11,7 @@ String Path::gameDir = "";
 String Path::Absolute(const String& path)
 {
 	if(IsAbsolute(path))
-		return path;
+	/*idk if this'll change anything. uncomment if it goes bad-> */ //	return path; 
 
 	String baseDir = "/sdcard/usc";
 
