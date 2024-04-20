@@ -86,7 +86,7 @@ bool TestManager::m_Begin()
 	m_moduleName = Path::GetModuleName();
 
 	// Create intermediate folder
-	m_testBasePath = Path::Absolute("TestFilesystem_" + m_moduleName);
+	m_testBasePath = "/sdcard/usc/TestFilesystem_" + m_moduleName;
 	if(Path::FileExists(m_testBasePath))
 		Path::DeleteDir(m_testBasePath);
 	if(!Path::CreateDir(m_testBasePath))

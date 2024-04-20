@@ -42,7 +42,7 @@ Test("File.Create")
 }
 Test("File.ScanFilesRecursive")
 {
-	String folder = Path::Absolute(TestBasePath + Path::sep + context.GetName() + "_TestFolder");
+	String folder = "/sdcard/usc/"+TestBasePath + Path::sep + context.GetName() + "_TestFolder";
 	TestEnsure(Path::CreateDir(folder));
 	TestEnsure(Path::IsAbsolute(folder));
 
@@ -69,7 +69,7 @@ Test("File.ScanFilesRecursive")
 }
 Test("File.ScanFiles")
 {
-	String folder = Path::Absolute(TestBasePath + Path::sep + context.GetName() + "_TestFolder");
+	String folder = "/sdcard/usc/"+TestBasePath + Path::sep + context.GetName() + "_TestFolder";
 	TestEnsure(Path::CreateDir(folder));
 	TestEnsure(Path::IsAbsolute(folder));
 

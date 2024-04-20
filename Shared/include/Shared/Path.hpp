@@ -89,5 +89,5 @@ public:
 	// The path to the game directory
 	// used to create absolute paths to game directories
 	// If not set, it will default to the game binary directory
-	static String gameDir;
+	static String baseDir;
 };
