@@ -13,9 +13,9 @@ String Path::Absolute(const String& path)
 	if(IsAbsolute(path))
 		return path;
 
-	String baseDir = "/sdcard/usc";
+	String baseDir = "/sdcard/usc/";
 
-	return baseDir + sep + path;
+	return baseDir + path;
 }
 String Path::RemoveLast(const String& path, String* lastOut /*= nullptr*/)
 {
