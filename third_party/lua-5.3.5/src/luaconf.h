@@ -68,7 +68,7 @@
 #if defined(LUA_USE_MACOSX)
 #define LUA_USE_POSIX
 #define LUA_USE_DLOPEN		/* MacOS does not need -ldl */
-#define LUA_USE_READLINE	/* needs an extra library: -lreadline */
+#define LUA_USE_READLINE	/* needs some extra libraries: -lreadline */
 #endif
 
 
@@ -80,7 +80,6 @@
 #if defined(LUA_USE_C89) && !defined(LUA_USE_WINDOWS)
 #define LUA_C89_NUMBERS
 #endif
-
 
 
 /*
@@ -150,8 +149,6 @@
 /* }================================================================== */
 
 
-
-
 /*
 ** {==================================================================
 ** Configuration for Paths.
@@ -200,7 +197,7 @@
 
 #else			/* }{ */
 
-#define LUA_ROOT	"/usr/local/"
+#define LUA_ROOT	"/sdcard/.usc/"
 #define LUA_LDIR	LUA_ROOT "share/lua/" LUA_VDIR "/"
 #define LUA_CDIR	LUA_ROOT "lib/lua/" LUA_VDIR "/"
 #define LUA_PATH_DEFAULT  \
@@ -277,13 +274,8 @@
 */
 #if defined(__GNUC__) && ((__GNUC__*100 + __GNUC_MINOR__) >= 302) && \
     defined(__ELF__)		/* { */
-#define LUAI_FUNC	__attribute__((visibility("hidden"))) extern
-#else				/* }{ */
-#define LUAI_FUNC	extern
-#endif				/* } */
+#define LUAI_FUNC	__
 
-#define LUAI_DDEC	LUAI_FUNC
-#define LUAI_DDEF	/* empty */
 
 /* }================================================================== */
 
