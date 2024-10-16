@@ -84,7 +84,7 @@ public:
 	// The character seperating directories/files 
 	// '/' on linux
 	// '\' on windows
-	static char sep;
+	static char sep = '/';
 
 	// The path to the game directory
 	// used to create absolute paths to game directories
