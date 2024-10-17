@@ -672,7 +672,7 @@ public:
 			}
 		}
 
-		for (std::string p : Path::GetSubDirs(Path::Absolute(g_gameConfig.GetString(GameConfigKeys::SongFolder))))
+		for (std::string p : Path::GetSubDirs("/sdcard/.usc/"+g_gameConfig.GetString(GameConfigKeys::SongFolder)))
 		{
 			if (m_folders.find(p) == m_folders.end())
 			{
@@ -1554,7 +1554,7 @@ public:
 				String paramFormat = g_gameConfig.GetString(GameConfigKeys::EditorParamsFormat);
 				String path = Path::Normalize(g_gameConfig.GetString(GameConfigKeys::EditorPath));
 				String param = Utility::Sprintf(paramFormat.c_str(),
-												Utility::Sprintf("\"%s\"", Path::Absolute(GetCurrentSelectedChart()->path)));
+												Utility::Sprintf("\"%s\"", "/sdcard/.usc/"+GetCurrentSelectedChart()->path));
 				Path::Run(path, param.GetData());
 			}
 			else if (code == SDL_SCANCODE_F12 && m_shiftDown)
@@ -1562,7 +1562,7 @@ public:
 				ChartIndex* sel = m_selectionWheel->GetSelectedChart();
 				if (sel) {
 					String& hash = sel->hash;
-					String replayPath = Path::Normalize(Path::Absolute("replays/" + hash + "/"));
+					String replayPath = Path::Normalize("/sdcard/.usc/"+"replays/" + hash + "/");
 					Path::ShowInFileBrowser(replayPath);
 				}
 			}

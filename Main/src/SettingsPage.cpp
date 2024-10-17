@@ -327,7 +327,7 @@ protected:
 		m_profiles.clear();
 		m_profiles.push_back("Main");
 
-		Vector<FileInfo> profiles = Files::ScanFiles(Path::Absolute("profiles/"), "cfg", NULL);
+		Vector<FileInfo> profiles = Files::ScanFiles("/sdcard/.usc/"+"profiles/", "cfg", NULL);
 
 		for (const auto& file : profiles)
 		{
@@ -416,8 +416,8 @@ protected:
 			|| profile[profile.length() - 1] == '.')
 			return;
 
-		if (!Path::IsDirectory(Path::Absolute("profiles")))
-			Path::CreateDir(Path::Absolute("profiles"));
+		if (!Path::IsDirectory("/sdcard/.usc/"+"profiles"))
+			Path::CreateDir("/sdcard/.usc/"+"profiles");
 
 
 		// Save old setting
@@ -578,7 +578,7 @@ void SettingsPageCollection::InitStyles()
 
 void SettingsPageCollection::InitPages()
 {
-	const String fontPath = Path::Normalize(Path::Absolute("fonts/settings/NotoSans-Regular.ttf"));
+	const String fontPath = Path::Normalize("/sdcard/.usc/"+"fonts/settings/NotoSans-Regular.ttf");
 	Graphics::Font font = g_application->LoadFont(fontPath, true);
 
 	m_pages.clear();

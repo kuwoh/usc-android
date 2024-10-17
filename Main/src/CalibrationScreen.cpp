@@ -19,7 +19,7 @@ CalibrationScreen::~CalibrationScreen()
 
 bool CalibrationScreen::AsyncLoad()
 {
-	m_metronome = SampleRes::Create(g_audio, Path::Normalize(Path::Absolute("audio/metronome120.wav")));
+	m_metronome = SampleRes::Create(g_audio, Path::Normalize("/sdcard/.usc/"+"audio/metronome120.wav"));
 	m_playback.MakeCalibrationPlayback();
 	m_audioOffset = g_gameConfig.GetInt(GameConfigKeys::GlobalOffset);
 	m_inputOffset = g_gameConfig.GetInt(GameConfigKeys::InputOffset);

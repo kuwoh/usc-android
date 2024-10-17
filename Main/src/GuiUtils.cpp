@@ -103,7 +103,7 @@ bool BasicNuklearGui::s_hasFontTexture = false;
 void BasicNuklearGui::StartFontInit()
 {
 	// This font should cover latin and cyrillic fonts.
-	const String defaultFontPath = Path::Normalize(Path::Absolute("fonts/settings/NotoSans-Regular.ttf"));
+	const String defaultFontPath = Path::Normalize("/sdcard/.usc/"+"fonts/settings/NotoSans-Regular.ttf");
 	const float fontSize = 24.f;
 
 	s_atlas = new nk_font_atlas();
@@ -185,7 +185,7 @@ void BasicNuklearGui::InitNuklearFontAtlas()
 
 void BasicNuklearGui::InitNuklearFontAtlasFallback(struct nk_font_atlas* atlas, float fontSize)
 {
-	const String cjkFontPath = Path::Normalize(Path::Absolute("fonts/settings/DroidSansFallback.ttf"));
+	const String cjkFontPath = Path::Normalize("/sdcard/.usc/"+"fonts/settings/DroidSansFallback.ttf");
 
 	// Essentials
 	constexpr int CJK_SIZE_SMALL = 1024;

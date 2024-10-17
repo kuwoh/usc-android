@@ -378,7 +378,7 @@ namespace Graphics
 	bool FontRes::LoadFallbackFont()
 	{
 		File file;
-		if(!file.OpenRead(Path::Absolute("fonts/NotoSansCJKjp-Regular.otf")))
+		if(!file.OpenRead("/sdcard/.usc/"+"fonts/NotoSansCJKjp-Regular.otf"))
 			return false;
 
 		loadedFallbackFont.resize(file.GetSize());

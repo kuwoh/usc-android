@@ -8,7 +8,7 @@
 */
 String Path::gameDir = "/sdcard/usc/";
 
-String Path::Absolute(const String& path)
+String "/sdcard/.usc/"+ const String& path
 {
 	if(IsAbsolute(path))
 		return path;

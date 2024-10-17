@@ -488,7 +488,7 @@ public:
 	void UpdateFilters()
 	{
 		/*
-		for (std::string p : Path::GetSubDirs(Path::Absolute(g_gameConfig.GetString(GameConfigKeys::SongFolder))))
+		for (std::string p : Path::GetSubDirs("/sdcard/.usc/"+(g_gameConfig.GetString(GameConfigKeys::SongFolder))))
 		{
 			if (m_folders.find(p) == m_folders.end())
 			{

@@ -96,7 +96,7 @@ public:
 	MapDatabase_Impl(MapDatabase& outer, bool transferScores) : m_outer(outer)
 	{
 		m_transferScores = transferScores;
-		String databasePath = Path::Absolute("maps.db");
+		String databasePath = "/sdcard/.usc/"+"maps.db";
 		if(!m_database.Open(databasePath))
 		{
 			Logf("Failed to open database [%s]", Logger::Severity::Warning, databasePath);
@@ -137,7 +137,7 @@ public:
 			ProfilerScope $(Utility::Sprintf("Upgrading db (%d -> %d)", gotVersion, m_version));
 
 			//back up old db file
-			Path::Copy(Path::Absolute("maps.db"), Path::Absolute("maps.db_" + Shared::Time::Now().ToString() + ".bak"));
+			Path::Copy("/sdcard/.usc/"+"maps.db", "/sdcard/.usc/"+"maps.db_" + Shared::Time::Now().ToString() + ".bak");
 
 			m_outer.OnDatabaseUpdateStarted.Call(1);
 
@@ -250,11 +250,11 @@ public:
 						auto timestamp = Shared::Time(score.timestamp);
 						score.chartHash = hash;
 #ifdef ANDROID
-						score.replayPath = Path::Absolute("replays/" + hash + "/" + timestamp.ToString() + ".urf");
+						score.replayPath = "/sdcard/.usc/"+"replays/" + hash + "/" + timestamp.ToString() + ".urf";
 #else
-						score.replayPath = Path::Normalize(Path::Absolute("replays/" + hash + "/" + timestamp.ToString() + ".urf"));
+						score.replayPath = Path::Normalize("/sdcard/.usc/"+"replays/" + hash + "/" + timestamp.ToString() + ".urf");
 #endif
-						Path::CreateDir(Path::Absolute("replays/" + hash));
+						Path::CreateDir("/sdcard/.usc/"+"replays/" + hash);
 						File replayFile;
 						if (replayFile.OpenWrite(score.replayPath))
 						{
@@ -492,7 +492,7 @@ public:
 	}
 	void AddSearchPath(const String& path)
 	{
-		String normalizedPath = Path::Absolute(path);
+		String normalizedPath = "/sdcard/.usc/"+path;
 		if(m_searchPaths.Contains(normalizedPath))
 			return;
 
@@ -500,7 +500,7 @@ public:
 	}
 	void RemoveSearchPath(const String& path)
 	{
-		String normalizedPath = Path::Absolute(path);
+		String normalizedPath = "/sdcard/.usc/"+path;
 		if(!m_searchPaths.Contains(normalizedPath))
 			return;
 
