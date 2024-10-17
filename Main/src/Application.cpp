@@ -1208,10 +1208,14 @@ bool Application::m_Init()
 
 
 	///TODO: check if directory exists already?
-	Path::CreateDir(Path::Absolute("screenshots"));
-	Path::CreateDir(Path::Absolute("songs"));
-	Path::CreateDir(Path::Absolute("replays"));
-	Path::CreateDir(Path::Absolute("crash_dumps"));
+	if (!Path::FileExists("/sdcard/.usc")){	
+		Path::CreateDir(Path::Absolute("screenshots"));
+		Path::CreateDir(Path::Absolute("songs"));
+		Path::CreateDir(Path::Absolute("replays"));
+		Path::CreateDir(Path::Absolute("crash_dumps"));
+	g_gameWindow->ShowMessageBox(".usc folder does not exist in root directory, created. " + String(Path::Absolute));
+	}
+	
 	Logger::Get().SetLogLevel(g_gameConfig.GetEnum<Logger::Enum_Severity>(GameConfigKeys::LogLevel));
 	return true;
 }
@@ -1667,7 +1671,7 @@ RenderQueue *Application::GetRenderQueueBase()
 
 Graphics::Image Application::LoadImage(const String &name)
 {
-	String path = String("skins/") + m_skin + String("/textures/") + name;
+	String path = Path::Absolute("skins/") + m_skin + "/textures/" + name;
 	return ImageRes::Create(Path::Absolute(path));
 }
 
@@ -1717,7 +1721,7 @@ Material Application::LoadMaterial(const String &name, const String &path)
 }
 Material Application::LoadMaterial(const String &name)
 {
-	return LoadMaterial(name, String("skins/") + m_skin + String("/shaders/"));
+	return LoadMaterial(name, ("skins/" + m_skin + "/shaders/");
 }
 Sample Application::LoadSample(const String &name, const bool &external)
 {
@@ -1725,7 +1729,8 @@ Sample Application::LoadSample(const String &name, const bool &external)
 	if (external)
 		path = name;
 	else
-		path = Path::Absolute(String("skins/") + m_skin + String("/audio/") + name);
+		path = Path::Absolute("skins/" + m_skin + "/audio/" + name);
+		//path = Path::Absolute(String("skins/") + m_skin + String("/audio/") + name);
 
 #ifndef ANDROID // I don't know why this is not working on android
 	path = Path::Normalize(path);
@@ -1749,8 +1754,8 @@ Graphics::Font Application::LoadFont(const String &name, const bool &external)
 	if (external)
 		path = name;
 	else
-		path = String("skins/") + m_skin + String("/fonts/") + name;
-
+		path = "skins/" + m_skin + "/fonts/" + name;
+		//path = String("skins/") + m_skin + String("/fonts/") + name;
 	Graphics::Font newFont = FontRes::Create(g_gl, path);
 	m_fonts.Add(name, newFont);
 	return newFont;
